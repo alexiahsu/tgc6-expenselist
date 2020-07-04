@@ -24,17 +24,42 @@ SESSION_KEY = os.environ.get('SESSION_KEY')
 app.secret_key = SESSION_KEY
 
 # Display all expenses
+# All routes by default is methods=GET
+
+
 @app.route('/')
 def home():
-    expenses = client[DB_NAME].expenses.find()
+    # extract out the terms
+    search_terms = request.args.get('search-terms')
+
+    criteria = {}
+
+    # if there are search terms, add it to the criteria object
+    if search_terms != "" and search_terms is not None:
+        criteria['expense_name'] = {
+            "$regex": search_terms,
+            "$options": "i"
+        }
+
+    # Filtering begins here
+    search_for_done = request.args.get('is_done')
+    if search_for_done is not None and search_for_done is not False:
+        criteria['reconciled'] = True
+
+    expenses = client[DB_NAME].expenses.find(criteria)
     return render_template('home.template.html', expenses=expenses)
 
+    print(criteria)
 # Show point of entry for expenses
+
+
 @app.route('/create/expense')
 def show_create_expense_form():
     return render_template('create_expense.template.html')
 
 # Write expenses into mongodb
+
+
 @app.route('/create/expense', methods=['POST'])
 def create_expense():
     expense_name = request.form.get('expense-name')
@@ -53,6 +78,8 @@ def create_expense():
     return redirect(url_for('home'))
 
 # Check reconcilation
+
+
 @app.route('/check/expense', methods=['PATCH'])
 def check_expense():
 
@@ -76,6 +103,7 @@ def check_expense():
     return {
         "status": "OK"
     }
+
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':

@@ -7,11 +7,17 @@
 
 <a href="{{url_for('create_expense')}}" class="btn btn-primary">New transaction</a>
 
+<form class="form-inline mt-3" method="GET">
+    <input type="text" class="form-control" placeholder="Enter search terms" name="search-terms"/>
+    <input type="checkbox" name="is_done" class="form-check-input ml-3"/>Reconciled
+    <input type="submit" value="Search" class="form-control ml-3"/>
+</form>
+
 <table class="table mt-3">
     <thead>
         <tr>
             <th></th>
-            <th>Transaction</th>
+            <th>Item</th>
             <th>Type</th>
             <th>Date</th>
             <th>Memo</th>

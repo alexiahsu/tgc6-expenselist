@@ -17,3 +17,11 @@
 6. Display relevant alerts (for example, when creating an expenditure)
 
 7. Display toastr when using AJAX to modify the reconcile
+
+# Find all transactions reconciled
+In mongo
+```
+db.expenses.find({
+    'reconciled': true
+})
+```
