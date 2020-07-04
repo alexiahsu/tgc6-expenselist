@@ -1,0 +1,63 @@
+{%extends 'layout.template.html' %}
+
+{%block title%}Money Management{%endblock%}
+
+{%block content%}
+<h2>Personal Financing</h2>
+
+<a href="{{url_for('create_expense')}}" class="btn btn-primary">New transaction</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Transaction</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Memo</th>
+        </tr>
+        {%for e in expenses %}
+            <tr>
+                <td>
+                {%if e.reconciled%}
+                <input type="checkbox" class="expense-checkbox" data-expense-id="{{e._id}}" checked/>
+                {%else%}
+                <input type="checkbox" class="expense-checkbox" data-expense-id="{{e._id}}"/>
+                {%endif%}
+                </td>
+                <td>{{e.expense_name}}</td>
+                <td>{{e.expense_type}}</td>
+                <td>{{e.expense_date}}</td>
+                <td>{{e.expense_memo}}</td>
+            </tr>
+        {%endfor%}
+    </thead>
+</table>
+{%endblock%}
+
+{%block js%}
+<script>
+$(function(){
+    $(".expense-checkbox").change(function(){
+        let expense_id = $(this).data('expense-id');
+        let url ="{{url_for('check_expense')}}";
+        let self = this;
+        axios.patch(url, {
+            'expense_id':expense_id
+        }).then(function(){
+            if (self.checked) {
+                toastr.success("Item has been reconciled!");
+            } else {
+                toastr.error("Item has not been reconciled!");
+            }
+            
+        })
+    })
+})
+// $(function(){
+//     $(".expense-checkbox").change(function(){
+//         let expense_id = $(this).data('expense-id');
+//     })
+// })
+</script>
+{%endblock%}

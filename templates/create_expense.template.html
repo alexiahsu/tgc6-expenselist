@@ -1,0 +1,29 @@
+{% extends 'layout.template.html' %}
+
+{%block title%}Create New Item{%endblock%}
+
+{%block content%}
+<form method="POST">
+    <h1>Create New Expense</h1>
+    <div>
+        <label class="mt-3">Item:</label>
+        <input type="text" name="expense-name" class="form-control"/>
+    </div>
+    <div>
+        <label class="mt-3">Date:</label>
+        <input type="date" name="expense-date" class="form-control"/>
+    </div>
+    <div>
+        <label class="mt-3">Expense type:</label>
+            <select name="expense-type" class="form-control">
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+            </select>
+    </div>
+    <div>
+        <label class="mt-3">Memo:</label>
+        <textarea name="expense-memo" class="form-control"></textarea>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary mt-2"/>
+</form>
+{%endblock%}
