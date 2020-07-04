@@ -9,7 +9,10 @@
 
 <form class="form-inline mt-3" method="GET">
     <input type="text" class="form-control" placeholder="Enter search terms" name="search-terms"/>
-    <input type="checkbox" name="is_done" class="form-check-input ml-3"/>Reconciled
+    <label class="ml-3">Task done?</label>
+    <input type="radio" name="is_done" value="any" class="form-check-input ml-3" checked/>Any
+    <input type="radio" name="is_done" value="done" class="form-check-input ml-3"/>Reconciled
+    <input type="radio" name="is_done" value="not-done" class="form-check-input ml-3"/>Not reconciled
     <input type="submit" value="Search" class="form-control ml-3"/>
 </form>
 

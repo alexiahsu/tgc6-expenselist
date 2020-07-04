@@ -43,8 +43,11 @@ def home():
 
     # Filtering begins here
     search_for_done = request.args.get('is_done')
-    if search_for_done is not None and search_for_done is not False:
+    if search_for_done != "any" and search_for_done == "done":
         criteria['reconciled'] = True
+
+    else:
+        criteria['reconciled'] = False
 
     expenses = client[DB_NAME].expenses.find(criteria)
     return render_template('home.template.html', expenses=expenses)
